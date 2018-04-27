@@ -35,6 +35,9 @@
             </table>
         </div>
         <div class="row">
+            {{ $posts->links() }}
+        </div>
+        <div class="row">
             <a class="btn btn-warning" href="{{ route('post.create') }}">Create new post</a>
         </div>
     </div>
