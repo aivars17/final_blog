@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PostsController extends Controller
 {
@@ -30,6 +31,7 @@ class PostsController extends Controller
         $user->posts()->create($request->except('_token') + [
             'date' => Carbon::now(),
             ]);
+        Session::flash('message', 'Your story was posted');
         return redirect()->route('home');
     }
 
@@ -42,12 +44,14 @@ class PostsController extends Controller
     public function destroy($id)
     {
         Post::findOrFail($id)->delete();
+        Session::flash('message', 'Post was deleted');
         return redirect()->back();
     }
 
     public function update($id, PostUpdateRequest $request)
     {
         Post::findOrFail($id)->update($request->except('_token'));
+        Session::flash('message', 'Your post updated');
         return redirect()->route('home');
     }
 

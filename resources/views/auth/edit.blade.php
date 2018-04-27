@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="container">
+        @if (Session::has('message'))
+            <div class="alert alert-info">{{ Session::get('message') }}</div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">

@@ -8,6 +8,7 @@ use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -21,6 +22,7 @@ class UserController extends Controller
         User::create($request->except('_token', 'password') + [
             'password' => bcrypt($request->password),
             ]);
+        Session::flash('message', 'New account was created');
         return redirect()->route('home');
     }
 
@@ -36,7 +38,7 @@ class UserController extends Controller
         $user->update($request->only('name', 'email') + [
             'password' => bcrypt($request->password),
             ]);
-
+        Session::flash('message', 'Your account was updated');
         return redirect()->back();
     }
 
@@ -54,6 +56,8 @@ class UserController extends Controller
             $post->delete();
         }
         $user->delete();
+        Session::flash('message', 'Your account was deleted');
+
         return redirect()->route('home');
     }
 }
